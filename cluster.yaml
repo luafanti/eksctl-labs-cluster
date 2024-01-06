@@ -1,0 +1,32 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: labs-cluster
+  region: eu-central-1
+
+managedNodeGroups:
+  - name: ng-1
+    spot: true
+    instanceTypes: ["t2.large","c4.large","c5.large","c5n.large","c5a.large"]
+    desiredCapacity: 1
+
+iam:
+  withOIDC: true
+  serviceAccounts:
+    - metadata:
+        name: aws-load-balancer-controller
+        namespace: kube-system
+      attachPolicyARNs:
+        - "arn:aws:iam::<AWS_ACCOUNT_ID>:policy/AWSLoadBalancerControllerIAMPolicy"
+    - metadata:
+        name: external-dns
+        namespace: kube-system
+      attachPolicyARNs:
+        - "arn:aws:iam::<AWS_ACCOUNT_ID>:policy/AWSExternalDnsIAMPolicy"
+
+addons:
+  - name: vpc-cni
+  - name: aws-ebs-csi-driver
+  - name: kube-proxy
+  - name: coredns

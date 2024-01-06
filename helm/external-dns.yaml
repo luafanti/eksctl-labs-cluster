@@ -1,0 +1,15 @@
+replicaCount: 1
+
+serviceAccount:
+  create: false
+  name: external-dns
+
+zoneType: public
+policy: sync
+
+domainFilters:
+  - yourdomain.com
+
+provider: aws
+
+txtOwnerId: external-dns
