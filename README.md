@@ -27,12 +27,13 @@ aws iam create-policy \
 ## EKS Cluster Setup
 
 Update the `cluster.yaml` file with ARNs of the IAM policies created in the previous step.
-Create the EKS cluster using eksctl with the provided cluster configuration:
+Create the EKS cluster using `eksctl` with the provided cluster configuration:
 
 ```bash
 eksctl create cluster -f cluster.yaml
 ```
 This command creates an EKS cluster based on the configuration specified in the `cluster.yaml` file. Adjust the configuration file to match your requirements.
+Keep in mind that the current configuration creates a cluster SPOT instances. This may cause your cluster to be unstable (frequent reboots). If you want to avoid this use ON_DEMAND instances. It will increase the cost of the lab cluster.
 
 Write the kubeconfig for the newly created cluster:
 
@@ -40,10 +41,10 @@ Write the kubeconfig for the newly created cluster:
 eksctl utils write-kubeconfig --cluster=labs-cluster
 ```
 
-Deploy AWS Load Balancer Controller & External DNS helm charts:
+Deploy AWS Load Balancer Controller & External DNS helm charts.
+Before deploying the helm charts, update the and `helm/external-dns.yaml` files with your domain name.
 
 ```bash
-
 helm repo add eks https://aws.github.io/eks-charts
 helm repo add bitnami https://charts.bitnami.com/bitnami
 

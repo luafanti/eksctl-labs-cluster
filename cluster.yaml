@@ -4,6 +4,7 @@ kind: ClusterConfig
 metadata:
   name: labs-cluster
   region: eu-central-1
+  version: "1.28"
 
 managedNodeGroups:
   - name: ng-1

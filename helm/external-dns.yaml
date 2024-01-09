@@ -8,7 +8,7 @@ zoneType: public
 policy: sync
 
 domainFilters:
-  - yourdomain.com
+  - <YOUR_DOMAIN>
 
 provider: aws
 
